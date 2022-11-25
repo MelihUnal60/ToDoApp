@@ -4,6 +4,9 @@ const from=document.querySelector("form");
 const input=document.querySelector("#txtTaskName");
 const btnDeleteAll=document.getElementById("btnDeleteAll");
 const taskList=document.getElementById("task-list");
+var sabit;
+
+
 let item;
 
 eventListener();
@@ -20,8 +23,10 @@ function eventListener(){
     btnDeleteAll.addEventListener("click",deleteAllItem);
 
     //edit item
-    taskList.addEventListener('click',editItem);
-}
+    taskList.addEventListener("click",editItem);
+
+   
+} 
 function deleteAllItem(e){
 
     if(confirm("Are you sure?")){
@@ -50,12 +55,37 @@ function deleteItem(e){
 
 function editItem(e){
 
-    
+    e.preventDefault();
+
+
     if(e.target.className==="btn btn-secondary btn-sm float-end mx-3"){
-        input.value.innerText = e.target.parentElement.innerText;
+        input.value =  e.target.parentElement.innerText;
+        sabit = e.target.parentElement;
+        //console.log(sabit);
     }
     
 }
+
+function setItem(){
+    
+        sabit.innerHTML = input.value;
+
+        const a=document.createElement('a');
+        a.classList='delete-item float-end'; //a elementi oluşturduk
+        a.setAttribute('href','#');
+        a.innerHTML='<i class="bi bi-x-circle"></i>';
+        
+        const edit=document.createElement('btn');
+        edit.classList='btn btn-secondary btn-sm float-end mx-3';
+        edit.appendChild(document.createTextNode("Edit"));
+        
+        sabit.appendChild(a);
+        sabit.appendChild(edit);
+    
+    
+}
+
+
 
 function addNewItem(e){
     
@@ -79,14 +109,11 @@ function addNewItem(e){
 
     const edit=document.createElement('btn');
     edit.classList='btn btn-secondary btn-sm float-end mx-3';
-    edit.innerHTML='Edit';
+    edit.appendChild(document.createTextNode("Edit"));
 
 
     li.appendChild(a); //a yı li nin içine soktuk
     li.appendChild(edit);
     taskList.appendChild(li); //li yi task listin child yaptık
-
-
-
 
 }
